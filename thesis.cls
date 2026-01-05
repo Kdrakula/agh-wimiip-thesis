@@ -8,31 +8,34 @@
 % ==============================================================================
 % 1. KODOWANIE, JĘZYK I CZCIONKI
 % ==============================================================================
-\RequirePackage[utf8]{inputenc}  % Kodowanie pliku wejściowego
-\RequirePackage[T1]{fontenc}     % Kodowanie fontów (obsługa polskich znaków)
-\RequirePackage{lmodern}         % Nowoczesna czcionka wektorowa
-\RequirePackage{tgheros}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+
+\RequirePackage{newtxtext}
+\RequirePackage{newtxmath}
+
+% \RequirePackage{lmodern}         % Nowoczesna czcionka wektorowa
+% \RequirePackage{tgheros}
 \RequirePackage{inconsolata}     % Ładna czcionka monospaced do kodu
 \RequirePackage[polish]{babel}   % Polskie zasady typograficzne i nazewnictwo
 \RequirePackage{csquotes}        % Poprawne cudzysłowy (wymagane przez biblatex)
 
-
 \RequirePackage{microtype}       % Mikro-typografia (lepsze odstępy, mniej wdów/sierot)
 \RequirePackage{indentfirst}     % Wcięcie w pierwszym akapicie rozdziału (standard w PL)
 
+\setlength{\parindent}{1cm}
 % ==============================================================================
 % 2. GEOMETRIA I UKŁAD STRONY
 % ==============================================================================
 \RequirePackage{geometry}
 \geometry{
-    left=2cm,
-    right=2cm,
-    top=2cm,
-    bottom=2cm,
+    a4paper,
+    margin=2cm,
+    % bindingoffset=10mm, % !!!!!!!! zmienic do druku
     headheight=15pt
-    % headsep=10mm,
-    % footskip=12mm
 }
+
+\RequirePackage{emptypage}
 
 \RequirePackage{setspace}
 \onehalfspacing                  % Interlinia 1.5
@@ -44,19 +47,29 @@
 \RequirePackage{fancyhdr}        % Nagłówki i stopki
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[LE,RO]{\thepage}      % Numery stron na zewnątrz
+% \fancyhead[LE,RO]{\thepage}      % Numery stron na zewnątrz
+\fancyfoot[LE, RO]{\thepage}
 \fancyhead[RE]{\nouppercase{\leftmark}} % Rozdział na lewej stronie
 \fancyhead[LO]{\nouppercase{\rightmark}} % Sekcja na prawej stronie
+
+\fancypagestyle{plain}{
+    \fancyhf{} % Wyczyść wszystko (żeby nie było numeru na środku)
+    \renewcommand{\headrulewidth}{0pt} % Brak kreski w nagłówku
+    
+    % Skopiuj ustawienie stopki ze swojego stylu głównego:
+    \fancyfoot[LE, RO]{\thepage} 
+}
 
 % ==============================================================================
 % 3. MATEMATYKA I JEDNOSTKI
 % ==============================================================================
-\RequirePackage{amsmath,amssymb} % Podstawowe pakiety matematyczne
-\RequirePackage{siunitx}         % Jednostki fizyczne (SI)
+\RequirePackage{amsmath}
+% \RequirePackage{amssymb}
+\RequirePackage{siunitx}
 \sisetup{
     range-phrase = --,
     range-units = single,
-    output-decimal-marker = {,}  % Przecinek jako separator dziesiętny (standard PL)
+    output-decimal-marker = {,}
 }
 
 % ==============================================================================
@@ -64,13 +77,14 @@
 % ==============================================================================
 \RequirePackage{graphicx}        % Obsługa grafik
 \RequirePackage{float}           % Wymuszanie pozycji [H]
-\RequirePackage{caption}         % Podpisy
+% W klasie 12pt: \normalsize=12pt, \small=11pt, \footnotesize=10pt
+\RequirePackage[font=footnotesize, labelfont=bf]{caption}        % Podpisy
 \RequirePackage{subcaption}      % Podpisy do pod-rysunków
+
 \RequirePackage{longtable}       % Długie tabele (na wiele stron)
 \RequirePackage{enumitem}        % Lepsze listy punktowane
 \RequirePackage{tikz}
 \usetikzlibrary{shapes, arrows.meta, positioning}
-
 \RequirePackage{pdfpages}
 % ==============================================================================
 % 5. BIBLIOGRAFIA
@@ -78,7 +92,7 @@
 \RequirePackage[
   backend=biber,
   style=numeric,
-  sorting=ynt
+  sorting=none
 ]{biblatex}
 \DeclareLanguageMapping{polish}{polish}
 
@@ -156,99 +170,74 @@
 % 8. ZMIENNE I KOMENDY DLA STRONY TYTUŁOWEJ
 % ==============================================================================
 
-% Definicje zmiennych
-% \newcommand{\thesistitle}[1]{\def\@thesistitle{#1}}
-% \newcommand{\thesisauthor}[1]{\def\@thesisauthor{#1}}
-% \newcommand{\printthesisauthor}{\@thesisauthor}
-% \newcommand{\faculty}[1]{\def\@faculty{#1}}
-% \newcommand{\department}[1]{\def\@department{#1}}
-% \newcommand{\thesistype}[1]{\def\@thesistype{#1}}
-% \newcommand{\thesissupervisor}[1]{\def\@thesissupervisor{#1}}
-% \newcommand{\thesisdate}[1]{\def\@thesisdate{#1}}
-% \newcommand{\printthesisdate}{\@thesisdate}
-% \newcommand{\thesislogo}[1]{\def\@thesislogo{#1}}
-
-% % Generowanie strony tytułowej
-% \newcommand{\maketitlepages}{
-%     \begin{titlepage}
-%         \selectlanguage{polish}
-%         \centering
-%         \ifdefined\@thesislogo
-%           \includegraphics[width=4cm]{\@thesislogo}\\[1cm]
-%         \fi
-%         {\Large \@faculty}\\[0.5cm]
-%         {\large \@department}\\[3cm]
-%         {\Huge\bfseries \@thesistitle}\\[3cm]
-%         \begin{flushright}
-%             \textbf{Autor:} \@thesisauthor\\
-%             \textbf{Promotor:} \@thesissupervisor
-%         \end{flushright}
-%         \vfill
-%         {\large \@thesisdate}
-%     \end{titlepage}
-% }
-
 \newcommand{\setSupervisor}[1]{\newcommand{\supervisor}{#1}}
 \newcommand{\setFaculty}[1]{\newcommand{\faculty}{#1}}
 \newcommand{\setDepartment}[1]{\newcommand{\department}{#1}}
 \newcommand{\setReviewer}[1]{\newcommand{\reviewer}{#1}}
 \newcommand{\setTitleang}[1]{\newcommand{\titleang}{#1}}
 \newcommand{\setMajor}[1]{\newcommand{\major}{#1}}
-
+    
 \renewcommand{\maketitle}{\begin{titlepage}
-    \sffamily 
+    % \sffamily 
+    % Ustawienie bazowe dla strony
+    \fontsize{11bp}{11bp}\selectfont 
     
-    \begin{center}
-        \includegraphics[height=60.85mm]{images/agh_nzw_s_pl_1w_wbr_rgb_150ppi.jpg}\\
-    \end{center}
-
-    \begin{center}
-        \vspace{-1ex}
-        % Nazwa wydziału - Small Caps, Bold
-        {\normalsize \bfseries \scshape \faculty} \\
-        
-        \vspace{1ex}
-        
-        % Nazwa katedry - Small Caps
-        {\normalsize \scshape \department} \\
+    \vspace*{5mm}
+    % --- LOGO I JEDNOSTKI ---
+    {\centering 
+        \includegraphics[height=68.6mm]{images/agh_nzw_s_pl_1w_wbr_rgb_150ppi.jpg} \par
+        \vspace{3mm}
+        {\bfseries \MakeUppercase{\faculty}} \par  
+        \vspace{3.5mm}     
+        {\MakeUppercase{\department}} \par
+    } 
     
-        \vspace{5ex}
+    % --- ODSTĘP: 2 entery + 6pt ---
+    \vspace{11mm}
 
-        % Nagłówek "Projekt dyplomowy"
-        {\Large Projekt dyplomowy} \\
-        
-        \vspace{5ex}
-        
-        % Tytuł pracy w języku polskim - Bold, Large
-        {\large \@title} \\
-        
-        \vspace{2ex}
-        
-        % Tytuł pracy w języku angielskim
-        {\large \titleang} \\
-    \end{center}
+    % --- NAGŁÓWEK: "Projekt dyplomowy" (18pt) ---
+    {\centering
+        \fontsize{18bp}{18bp}\selectfont Projekt dyplomowy \par
+    }
 
-    \vspace{10ex} % Przestrzeń przed danymi autora
+    % --- ODSTĘP: enter + 10pt ---
+    \vspace{6.5mm}
 
+    % --- TYTUŁY PRACY (16pt) ---
+    {\centering
+        \fontsize{16bp}{16bp}\selectfont 
+        {\@title} \par
+        {\titleang} \par
+    }
+
+    % --- ODSTĘP: 8 enterów ---
+    \vspace{34.5mm}
+
+    % --- DANE AUTORA (11pt) ---
+    % Wracamy do 11pt (dla pewności)
+    \fontsize{11bp}{11bp}\selectfont
     \noindent
-    \begin{tabular}{@{}l @{\hspace{1.5cm}} l} 
-        {\normalsize Autor:} & {\normalsize \@author} \\
-        {\normalsize Kierunek studiów:} & {\normalsize \major} \\
-        {\normalsize Opiekun projektu:} & {\normalsize \supervisor}
+    \begin{tabular}{@{} l @{\hspace{19mm}} l} 
+        {Autor:} & {\@author} \\
+        {Kierunek studiów:} & {\major} \\
+        {Opiekun projektu:} & {\supervisor}
     \end{tabular}
     
     \vfill 
     
     \begin{center}
-        {\normalsize Kraków, 2025}
-    \end{center}  
+        Kraków, \the\year
+    \end{center}
 \end{titlepage}%
 }
+
+\newcommand{\leadingzero}[1]{\ifnum #1<10 0\the#1\else\the#1\fi}
+\newcommand{\todayDDMMYYYY}{\leadingzero{\day}.\leadingzero{\month}.\the\year}
 
 % Oświadczenie o samodzielności
 \newcommand{\makedeclaration}{
   \cleardoublepage
-  \thispagestyle{empty}
+  \thispagestyle{plain}
   \begin{center}
     \textbf{Oświadczenie}
   \end{center}
@@ -256,8 +245,8 @@
   Ja, niżej podpisany/a, oświadczam, że niniejsza praca dyplomowa została wykonana przeze mnie samodzielnie,
   przy wykorzystaniu wskazanych źródeł i literatury. \\[2em]
   \begin{flushright}
-    \textbf{\@thesisauthor} \\[0.5em]
-    Data: \@thesisdate
+    \textbf{\@author} \\[0.5em]
+    Data: \todayDDMMYYYY
   \end{flushright}
   \clearpage
 }
