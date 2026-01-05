@@ -2,12 +2,14 @@
 
 Nieoficjalna klasa LaTeX zgodna z wymogami edytorskimi Wydziału Inżynierii Metali i Informatyki Przemysłowej (WIMiIP) Akademii Górniczo-Hutniczej w Krakowie.
 
-Szablon został dostosowany do wytycznych na rok akademicki **2025/2026**.
+Szablon został dostosowany do wytycznych z roku **2021**.
+link: 
 
 ## ✨ Cechy klasy
 * **Czcionka:** Times New Roman (pakiet `newtxtext`) - tekst podstawowy 12pt.
 * **Układ:** Marginesy 2cm + 1cm na oprawę, interlinia 1.5.
-* **Strona tytułowa:** Zgodna z nowym wzorem (Logotypy, wielkie litery).
+* **Strona tytułowa:** Zgodna z podanym dokumentem Word.
+ link: 
 * **Bibliografia:** Nowoczesny silnik `biblatex` (Biber).
 * **Kod źródłowy:** Skonfigurowane środowisko `listings` z kolorowaniem składni.
 
@@ -27,6 +29,9 @@ Masz dwie proste metody, aby rozpocząć pisanie pracy na bazie tego szablonu.
 1. Kliknij przycisk **Fork** w prawym górnym rogu tej strony.
 2. Utworzysz w ten sposób własną kopię tego repozytorium na swoim koncie.
 3. Sklonuj swoje nowe repozytorium: `git clone https://github.com/TWOJA-NAZWA/agh-wimiip-thesis.git`
+
+
+### Metoda 3: GitHub Template
 
 ---
 
